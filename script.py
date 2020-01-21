@@ -1,3 +1,5 @@
+import random
+
 bot_template = "BOT : {0}"
 user_template = "USER : {0}"
 name = "Greg"
@@ -5,20 +7,27 @@ weather = "cloudy"
 
 
 responses = {
-    "what's your name?": "my name is {0}".format(name),
-    "what's today's weather?": "the weather is {0}".format(weather),
-    "default": "default message"
+    "what's your name?": [
+        "my name is {0}".format(name),
+        "they call me {0}".format(name),
+        "I go by {0}".format(name)
+    ],
+    "what's today's weather?": [
+        "the weather is {0}".format(weather),
+        "it's {0} today".format(weather)
+    ],
+    "default": ["default message"]
 }
 
 
 def respond(message):
 
     if message in responses:
+        bot_message = random.choice(responses[message])
 
-        bot_message = responses[message]
     else:
+        bot_message = random.choice(responses["default"])
 
-        bot_message = responses["default"]
     return bot_message
 
 
