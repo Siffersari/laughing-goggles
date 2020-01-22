@@ -15,6 +15,26 @@ rules = {'I want (.*)': ['What would it mean if you got {0}',
                      'Really--if {0}']}
 
 
+# Define replace_pronouns()
+def replace_pronouns(message):
+
+    message = message.lower()
+    if 'me' in message:
+        # Replace 'me' with 'you'
+        return re.sub('me', 'you', message)
+    if 'my' in message:
+        # Replace 'my' with 'your'
+        return re.sub('my', 'your', message)
+    if 'your' in message:
+        # Replace 'your' with 'my'
+        return re.sub('your', 'my', message)
+    if 'you' in message:
+        # Replace 'you' with 'me'
+        return re.sub('you', 'me', message)
+
+    return message
+
+
 # Define match_rule()
 def match_rule(rules, message):
     response, phrase = "default", None
@@ -27,7 +47,7 @@ def match_rule(rules, message):
             # Choose a random response
             response = random.choice(responses)
             if '{0}' in response:
-                phrase = match.group(1)
+                phrase = replace_pronouns(match.group(1))
     # Return the response and phrase
     return response.format(phrase)
 
